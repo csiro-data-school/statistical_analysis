@@ -1,0 +1,51 @@
+---
+title: "Exercise 9 - k-means clustering"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+source("stats_helpers.R")
+```
+
+# k-means clustering
+
+The function `kmeans` performs k-means clustering on a dataset. The function takes the dataset you
+wish to cluster, and the number of clusters you wish to fit.
+
+We will revisit our PCA on the mtcars dataset and cluster the cars along the first two principal
+components. There are several methods to choose the 'best' number of clusters, but for this example
+we will arbitrarily choose to cluster into five groups.
+
+```{r mtcars_kmeans}
+#Select just PC1/PC2
+mtcars_PC1_PC2 <- mtcars_pca$x[,c("PC1", "PC2")]
+
+#Cluster mtcars on PC1/PC2
+set.seed(30)
+mtcars_cluster <- kmeans(mtcars_PC1_PC2, centers = 5)
+
+mtcars_cluster
+```
+
+To extract the clustering assignment for each car, we can use `mtcars_cluster$cluster`. To find the 
+coordinates for the final position of the centroid for each cluster, use `mtcars_cluster$centers`.
+
+We can overlay this new information on top of the plot we produced earlier
+
+```{r mtcars_cluster_plot}
+# Data conversion
+car_clusters <- as.character(mtcars_cluster$cluster)
+car_centroids <- as_tibble(mtcars_cluster$centers)
+
+# Plot it
+mtcars_pca_plot +
+  geom_point(aes(colour = car_clusters)) +
+  geom_point(data = car_centroids)
+```
+
+### Try it out
+
+Apply k-means clustering to the first two principal components of the gene expression data you used 
+above. Overlay this clustering information on a plot of the samples. How many clusters work best 
+with the data?

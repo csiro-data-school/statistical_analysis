@@ -82,3 +82,14 @@ tweet_models <- tweet_data %>%
     colour = "Party"
   ) +
   theme(legend.position = "bottom")
+
+
+# Exercise 9 helper code
+
+mtcars_scaled <- select(mtcars, -mpg, -am, -vs) %>% scale
+mtcars_pca <- prcomp(mtcars_scaled)
+
+mtcars_pca_plot <- mtcars_pca$x %>% 
+  as_tibble(rownames = "car") %>% 
+  ggplot(aes(x = PC1, y = PC2)) +
+  geom_point() 
