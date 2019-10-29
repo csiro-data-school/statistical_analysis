@@ -1,0 +1,158 @@
+---
+title: "Exercise 4 - Linear regression"
+output: html_document
+---
+
+```{r setup, include=FALSE, message=FALSE}
+library(tidyverse)
+
+source("stats_helpers.R")
+```
+
+> We'll create perfect linear data, and linear data with normal (Gaussian)
+random noise, and non-normal random noise, data with outliers,
+and nonlinear data.
+
+Let's start with the basic relationship y = 2 * x + 5 and look at that over the values from 1 to 10.
+We'll then add some noise to this data by sampling or change it from a linear relationship.
+
+```{r data_setup}
+# the data has already been created in stats_helpers.R
+
+test_data
+```
+
+>  Fit a linear model for each of these situations and produce diagnostic plots. Note how 
+they look when the assumptions of linear regression are violated.
+
+We can use the `perfect_linear` data as an example for how to perform the analysis, then you can 
+repeat it with the other datasets.
+First, we'll take a look at the data before we start to analyse it
+
+```{r data_exploration}
+perfect_plot <- test_data %>% 
+  ggplot(aes(x = x, y = perfect_linear)) +
+  geom_point()
+
+perfect_plot
+```
+It appears as though our `perfect_linear` values increase with increasing `x` values. We can build a
+linear regression that models this relationship using the `lm` command. This function also uses the 
+formula notation that we have used several times already.
+
+```{r linear_regression}
+perfect_model <- lm(perfect_linear ~ x, data = test_data)
+
+#Short summary of the model
+perfect_model
+
+#Longer summary of the model
+summary(perfect_model)
+```
+
+Just printing the linear model out provides a basic look at the results. Remember that the equation
+for a line is $Y = aX + b$. In fitting the linear model with `lm`, we are trying to determine the 
+"best" values of `a` and `b` that minimise the amount of error between the straight line and our data
+points.
+
+The output from the model is telling us that the best estimate for `a` is 2.0 and for `b` is 5.0. 
+Which is to be expected because we created the data with the formula $Y = 2*X + 5$.
+
+The more detailed output from `summary(perfect_model)` gives additional information that can be used 
+to validate and interpret our model. 
+
+We can add the result from our model on top of our initial plot to see the relationship:
+
+```{r regression_results}
+#Manually
+perfect_plot + 
+  geom_abline(intercept = 5, slope = 2)
+
+#Using geom_smooth()
+perfect_plot +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+A good way to check your model is by producing some summary plots that test the underlying 
+statistical assumptions (can you remember what they are?). 
+
+You can get some summary plots of your model (including the residuals), by calling `plot` on the 
+result of running `lm`. Alternatively, if you install the `ggResidpanel` package you can produce
+diagnostic plots using `resid_panel`.
+
+The diagnostic plots from `resid_panel` show:
+*  Residual plot -residuals vs predicted values - test constant variance
+*  QQ plot - tests normality assumption
+*  Index Plot - additional plot to test assumptions
+*  Histogram of residues - check if any skewness is present
+
+```{r diagnostic_plots}
+# Install the package with 
+# install.packages(ggResidpanel)
+
+library(ggResidpanel)
+
+resid_panel(perfect_model)
+```
+**Note:** for the perfect linear model, these summary plots are not that useful because there aren't
+any true residuals from a perfect relationship. These plots will be mush more informative when you 
+start to use them with more realistic data.
+
+```{r perfect_linear_example}
+#Exploratory plotting
+ggplot(test_data, aes(x = x, y = perfect_linear)) + geom_point()
+
+#Fit linear model
+perfect_model <- lm(perfect_linear ~ x, data = test_data)
+
+#Diagnostic plots
+ggResidpanel::resid_panel(perfect_model)
+```
+
+Now you can complete the exercise with the four other instances from the `test_data` data frame. 
+These four column are `normal_noise`, `non_normal_noise`, `outliers`, and `non_linear`. How do the 
+diagnostic plots look when the assumptions of a linear regression are violated?
+
+```{r linear_regression_assumptions}
+# Plot relationship
+test_data %>% 
+  ggplot(_____)
+
+# Model relationship with lm()
+lm(_____ ~ _____, data = test_data)
+
+# Check model result
+summary(_____)
+
+# Test model assumptions
+resid_panel(_____)
+```
+
+## Extension
+
+If you have completed the exercise looking at these artificial datasets, try the same process with
+the inbuilt `iris` dataset.
+
+#### About the iris data
+From `?iris`: The iris data set has measurements (in cm)  of the variables sepal length
+and width and petal length and width, respectively,for 50 flowers from
+each of 3 species of iris. The species are Iris setosa, versicolor, and virginica.
+
+The four measurements in `iris` are `Sepal.Length`, `Sepal.Width`, `Petal.Length`, and `Petal.Width`.
+Create some scatter plots comparing pairs of these measurements. Select a pair and perform a linear
+regression on the relationship. What does the linear model say about the relationship, and are the
+model's assumptions appropriate for this data?
+
+```{r iris_regression}
+# Check raw data
+iris
+
+# Plot relationship
+
+# Model relationship
+
+# Check model result
+
+# Check model assumptions
+```
+

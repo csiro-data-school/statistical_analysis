@@ -1,5 +1,7 @@
 library(tidyverse)
 
+# Exercise 1 helper code
+
 income_data <- read_csv("data/income.csv")
 
 sample_income <- function(n) {
@@ -25,3 +27,27 @@ sample_nuggety <- function(n) {
   
   sample(values, size = n, replace = T, prob = weights)
 }
+
+# Exercise 4 helper code
+
+x = seq(1, 10, by = 0.5)
+perfect_linear <- (2 * x) + 5
+
+test_data <- tibble(x, perfect_linear) %>% 
+  mutate(
+    #Normal noise
+    normal_noise = perfect_linear + rnorm(n = length(x), mean = 0, sd = 2),
+    
+    #Non-normal noise: use exponential distribution
+    non_normal_noise = perfect_linear + rexp(n = length(x)),
+    
+    #Outliers: normal noise plus 10% chance of adding 8 to the value
+    outliers = perfect_linear + 
+      rnorm(n = length(x)) + 
+      sample(c(0, 8), prob = c(0.9, 0.1), size = length(x), replace = T),
+    
+    #Non-linear data: make the relationship quadratic instead
+    non_linear = x^2 + 5
+  )
+
+
