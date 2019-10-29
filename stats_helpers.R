@@ -33,13 +33,14 @@ sample_nuggety <- function(n) {
 x = seq(1, 10, by = 0.5)
 perfect_linear <- (2 * x) + 5
 
+set.seed(50)
 test_data <- tibble(x, perfect_linear) %>% 
   mutate(
     #Normal noise
     normal_noise = perfect_linear + rnorm(n = length(x), mean = 0, sd = 2),
     
     #Non-normal noise: use exponential distribution
-    non_normal_noise = perfect_linear + rexp(n = length(x)),
+    non_normal_noise = perfect_linear + rexp(n = length(x), rate = 0.5),
     
     #Outliers: normal noise plus 10% chance of adding 8 to the value
     outliers = perfect_linear + 
@@ -48,6 +49,7 @@ test_data <- tibble(x, perfect_linear) %>%
     
     #Non-linear data: make the relationship quadratic instead
     non_linear = x^2 + 5
-  )
+  ) %>% 
+  sample_frac()
 
 
