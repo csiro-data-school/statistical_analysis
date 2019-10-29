@@ -1,0 +1,37 @@
+---
+title: "Exercise 3 - Testing means"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+>Apply a t-test to compare means between two samples.
+
+To ask if the means between two samples are the same, you can use the `t.test()` function. This uses
+the same formula notation as the `boxplot()` function did earlier. Remember that the structure of this formula 
+is the response variable (what you are measuring) on the left, the grouping variable on the right.
+
+Since the InsectSprays dataset has several groups, you will need to filter out just two to perform 
+the t test otherwise you will get an error. Pick a few pairs of sprays to compare (from your boxplots
+or summary statistics). 
+
+```{r t_tests}
+# sleep t test
+sleep_t <- t.test(_____ ~ _____, data = sleep)
+
+sleep_t
+
+# InsectSprays t test for sprays A and B
+spray_AB <- filter(InsectSprays, spray %in% c("A","B"))
+
+spray_AB_t <- t.test(_____)
+
+spray_AB_t
+
+# Choose your own pair of sprays to compare:
+
+```
+
+What information does the t test show you, and how do you interpret these result?
