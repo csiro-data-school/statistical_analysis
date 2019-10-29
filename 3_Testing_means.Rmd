@@ -35,3 +35,28 @@ spray_AB_t
 ```
 
 What information does the t test show you, and how do you interpret these result?
+
+
+## t test summary
+
+A t test is used to ask if the means of two samples (`A` and `B` in the diagram below) are different. 
+The test first summarises the data points (the `.`s) into two summary statistics, the means of the 
+two groups (`o`) and the amount of variation from those means (`=====`).
+
+The difference between the means (`-------`) is then compared to the variation around the means (`=====`)
+to produce a t statistic. A large t statistic means the difference between the means is very large
+compared to the variation around each mean.
+
+This t statistic is used to calculate a p value, which tells us the probability of observing a 
+t statistic at least this large if we assume that there is no true difference in means between the
+two groups (the null hypothesis).
+
+```
+A    .   .  ..  .  ... ..  ..  .  ..  .
+                =====o=====
+                     ------------------------------
+                                            ======o======
+B                .         .       .   .  ..  .  ... ..  ..  .  ..  ..
+__________________________________________________________________________
+0          10          20          30          40          50          60
+```
