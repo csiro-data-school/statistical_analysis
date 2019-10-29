@@ -1,0 +1,27 @@
+Counting,INCP Total Personal Income (weekly),SEXP Sex,Count,low,high
+Persons Place of Usual Residence,"$1-$149 ($1-$7,799)",Male,308775,1,149
+Persons Place of Usual Residence,"$1-$149 ($1-$7,799)",Female,492602,1,149
+Persons Place of Usual Residence,"$150-$299 ($7,800-$15,599)",Male,560165,150,299
+Persons Place of Usual Residence,"$150-$299 ($7,800-$15,599)",Female,783960,150,299
+Persons Place of Usual Residence,"$300-$399 ($15,600-$20,799)",Male,686216,300,399
+Persons Place of Usual Residence,"$300-$399 ($15,600-$20,799)",Female,933311,300,399
+Persons Place of Usual Residence,"$400-$499 ($20,800-$25,999)",Male,598523,400,499
+Persons Place of Usual Residence,"$400-$499 ($20,800-$25,999)",Female,955580,400,499
+Persons Place of Usual Residence,"$500-$649 ($26,000-$33,799)",Male,555893,500,649
+Persons Place of Usual Residence,"$500-$649 ($26,000-$33,799)",Female,869438,500,649
+Persons Place of Usual Residence,"$650-$799 ($33,800-$41,599)",Male,633309,650,799
+Persons Place of Usual Residence,"$650-$799 ($33,800-$41,599)",Female,793211,650,799
+Persons Place of Usual Residence,"$800-$999 ($41,600-$51,999)",Male,797881,800,999
+Persons Place of Usual Residence,"$800-$999 ($41,600-$51,999)",Female,756945,800,999
+Persons Place of Usual Residence,"$1,000-$1,249 ($52,000-$64,999)",Male,876605,1000,1249
+Persons Place of Usual Residence,"$1,000-$1,249 ($52,000-$64,999)",Female,711907,1000,1249
+Persons Place of Usual Residence,"$1,250-$1,499 ($65,000-$77,999)",Male,621260,1250,1499
+Persons Place of Usual Residence,"$1,250-$1,499 ($65,000-$77,999)",Female,468474,1250,1499
+Persons Place of Usual Residence,"$1,500-$1,749 ($78,000-$90,999)",Male,546477,1500,1749
+Persons Place of Usual Residence,"$1,500-$1,749 ($78,000-$90,999)",Female,376331,1500,1749
+Persons Place of Usual Residence,"$1,750-$1,999 ($91,000-$103,999)",Male,402420,1750,1999
+Persons Place of Usual Residence,"$1,750-$1,999 ($91,000-$103,999)",Female,236543,1750,1999
+Persons Place of Usual Residence,"$2,000-$2,999 ($104,000-$155,999)",Male,670312,2000,2999
+Persons Place of Usual Residence,"$2,000-$2,999 ($104,000-$155,999)",Female,291453,2000,2999
+Persons Place of Usual Residence,"$3,000 or more ($156,000 or more)",Male,448427,3000,4000
+Persons Place of Usual Residence,"$3,000 or more ($156,000 or more)",Female,148101,3000,4000

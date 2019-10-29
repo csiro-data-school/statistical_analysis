@@ -1,0 +1,150 @@
+---
+title: "Exercise 1 - Sampling and distributions"
+output: html_document
+---
+
+```{r loading_libraries, include=FALSE}
+library(tidyverse)
+
+# We have provided some additional functions to help with these exercises in the 'stats_helpers.R' file
+# We can run that script to make them available here using the `source` function
+
+source('stats_helpers.R')
+
+```
+
+R has a number of inbuilt distributions that are commonly used in statistical analysis.
+Sampling from these distributions is done using the `r<distrib>()` functions, where `<distrib>` is 
+substituted for the short name of a distribution. Some distributions you might be exposed to 
+(and their sampling functions) are:
+
+* The Normal (Gaussian) distribution - `rnorm()`
+* The Poisson distribution - `rpois()`
+* The Gamma distribution - `rgamma()`
+* The Exponential distribution - `rexp()`
+* The Binomial distribution - `rbinom()`
+
+Each of these functions are called with an argument `n` for the number of samples to take, as well 
+as arguments that specify the parameters of the distribution. For example, a normal distribution is
+defined by it's mean and standard deviation, so these can be provided to `rnorm()`
+
+```{r distribution_sampling}
+#Using default mean (0) and standard deviation (1)
+normal_default <- rnorm(n = 10)
+
+#Setting mean and standard deviation
+normal_specified <- rnorm(n = 10, mean = 5, sd = 3)
+
+normal_default
+
+normal_specified
+```
+
+Using these sampling functions, complete the following exercises. Some initial code has been 
+provided but you will need to fill in the blanks (????? or _____) and extend them to other 
+distributions.
+
+>Sample from the Normal and the Exponential distributions.  Take 5, 10, 200 and 1000 samples 
+with default parameters and produce a histogram the results.   
+
+```{r changing_sample_size}
+# Normal distribution
+norm_5 <- rnorm(n = 5)
+norm_10 <- rnorm(n = 10)
+norm_200 <- rnorm(_____)
+_____
+
+# Histograms
+hist(norm_5)
+hist(norm_10)
+_____
+_____
+
+# Exponential distribution
+exp_5 <- rexp(n = 5)
+
+```
+
+> Take 30 samples and repeat this 6 times for your two distributions. Histogram the observations.
+How does the histogram of the samples look different each time?
+
+```{r repeated_sampling}
+# Normal distribution
+repeated_norm <- tibble(
+  a = rnorm(30), 
+  b = rnorm(30), 
+  c = rnorm(30), 
+  d = rnorm(30), 
+  e = rnorm(30), 
+  f = rnorm(30)
+)
+
+repeated_norm
+
+# Exponential distribution
+repeated_exp <- tibble(
+  ______
+)
+
+# Histograms with hist()
+hist(repeated_norm$a)
+hist(repeated_norm$b)
+_____
+
+# Histograms with ggplot and facets
+long_norm <- gather(repeated_norm, sample_id, sample_value)
+
+long_norm
+
+ggplot(long_norm, aes(x = sample_value)) + geom_histogram() + facet_wrap(~ sample_id)
+```
+
+> Create box and whisker plots for your repeated samples. The central box shows between (roughly) 
+the quartiles of the data, with the median represented  by a line. The 'whiskers' goes out to the 
+extremes of data. Compare with the histograms, do they summarise the distributions well?
+
+By default, the `boxplot()` function will plot one boxplot for each column in your data. This may 
+not be suitable if you have a tidy dataframe with one column specifying a grouping variable. In this
+case, you can use the formula method to create boxplots of one column based on groupings in a second
+column. Both examples are shown below with our wide and long datasets.
+
+Using `ggplot` provides more control over how the boxplots are constructed. But it may be overkill 
+if you are just wanting a quick initial look at your data.
+
+```{r boxplots}
+# Normal distribution
+## Boxplots with boxplot()
+boxplot(repeated_norm)
+
+boxplot(sample_value ~ sample_id, data = long_norm)
+
+# Boxplots with ggplot
+ggplot(long_norm, aes(x=sample_id, y = sample_value)) + geom_?????()
+
+# Exponential distribution
+_____
+
+```
+
+To practice these on more realistic data, we have created several functions that mimic the sort of
+data you might encounter in a real situation. These functions all take a single argument `n` that specifies
+the number of samples to take:
+
+* `sample_heights(n)`: Sample `n` values from a human height distribution
+* `sample_income(n)`: Sample `n` values approximating average weekly income from the 2016 Australian Census
+* `sample_nuggety(n)`: Sample `n` values from a "nuggety" distribution, with mostly low value samples,
+                       but a few high value "gold nuggets".
+
+>Explore these data sets with histograms and boxplots. What are your initial impressions about 
+these data sets as you explore them with different sampling depths?
+
+```{r real_data}
+# Sample with different n values
+
+
+# Histogram summaries
+
+
+# Boxplot summaries
+
+```
