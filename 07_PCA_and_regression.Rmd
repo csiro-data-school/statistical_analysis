@@ -1,0 +1,97 @@
+---
+title: "Exercise 7 - PCA and regression"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+# Principal Component Analysis
+
+To introduce PCA, we will work with the inbuilt `mtcars` dataset. First, we will select the variables 
+and scale them all to have mean equal to zero and standard deviation equal to one.
+
+```{r mtcars_data}
+# Removing am and vs because they are categorical variables
+# Removing mpg because we will use it later to show how we can use PCA
+mtcars_scaled <- select(mtcars, -mpg, -am, -vs) %>% scale
+
+head(mtcars_scaled)
+```
+
+To perform PCA, we will use the `prcomp` function. This function takes a data frame of numeric 
+values that provide the data for the PCA. We have already scaled the data, but if you have not
+you can provide `prcomp` the argument `scale. = TRUE` to have it do the scaling for you. (note the 
+fullstop at the end of scale though).
+
+```{r mtcars_PCA}
+mtcars_pca <- prcomp(mtcars_scaled)
+
+summary(mtcars_pca)
+```
+
+The summary of the PCA results tells us how much of the variance in our data is explained by each 
+component. In this case, the first component (PC1) explains 60% of the variance, and the second (PC2)
+explains 26% for a combined total of 86% explained by both PC1 and PC2. You can also see this in 
+graphical form (also called a screeplot) by calling `plot` on the PCA result.
+
+```{r mtcars_screeplot}
+plot(mtcars_pca)
+```
+
+
+The "rotated" data can be accessed using `mtcars_pca$x` and can be used to plot the data along the 
+principal components.
+
+```{r mtcars_plot}
+head(mtcars_pca$x)
+
+# This is stored as a matrix. Good for mathematical functions, not so 
+# good for tidyverse manipulation and plotting. So we will convert it.
+mtcars_pca_plot <- mtcars_pca$x %>% 
+  as_tibble(rownames = "car") %>% 
+  ggplot(aes(x = PC1, y = PC2)) +
+  geom_point() 
+
+mtcars_pca_plot
+```
+
+The values used to transform the original data into the principal components can be found in 
+`mtcars_pca$rotation`.
+
+This can be used to help understand how much each original variable contributes to each principal
+component.
+
+```{r mtcars_rotation}
+mtcars_pca$rotation
+```
+For example, the PC1 values are high when the `cyl`, `disp`, `hp`, `wt`, and `carb`
+variables are high, and low when the `drat`, `qsec`, and `gear` variables are high.
+
+#### Using PCA in regression
+
+We can use these PCA results in a linear regression analysis. They may have several benefits in this
+case since the transformed variables are uncorrelated from each other, and the first few components 
+will explain most of the variation in a dataset.
+
+For example, running a linear regression on the original mtcars dataset:
+```{r mtcars_lm}
+# . is a shortcut for "all other variables"
+lm(mpg ~ ., data = mtcars) %>% 
+  summary()
+```
+
+If instead, we combine the mpg variable with our calculated principal component variables:
+```{r mtcars_pca_lm}
+#Combine
+rotated_mtcars <- as_tibble(mtcars_pca$x)
+rotated_mtcars$mpg <- mtcars$mpg
+
+#Model
+lm(mpg ~ ., data = rotated_mtcars) %>% 
+  summary()
+```
+
+And since PC1/PC2/PC3 explained a total of 92% of the variance in the dataset between them, we would
+probably only have needed to include them from the start.
