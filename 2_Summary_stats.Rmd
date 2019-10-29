@@ -1,0 +1,60 @@
+---
+title: "Exercise 2 - Summary statistics"
+output: html_document
+---
+
+```{r load_libraries, include=FALSE}
+library(tidyverse)
+```
+
+R has a number of inbuilt functions to calculate summary statistics. Each of them takes a set of 
+numbers and reduces them down to a single summary value. For this exercise, we will be asking you
+to work with two inbuilt datasets, `sleep` and `InsectSprays`.
+
+```{r datasets}
+#Learn about the datasets
+?sleep
+?InsectSprays
+```
+
+
+> Calculate summary statistics for each group in the data.
+
+Calculate the:
+
+* Mean - `mean()`
+* Median - `median()`
+* Variance - `var()`
+* Standard deviation - `sd()`
+* Interquartile range - `IQR()`
+
+for each experimental group in the `sleep` and `InsectSprays` data set.
+
+```{r summary_stats}
+# Summarise sleep
+sleep %>% 
+  group_by(_____) %>% 
+  summarise(_____)
+
+# Summarise InsectSprays
+InsectSprays %>% 
+  _____
+```
+
+Are the summary statistics useful in understanding the data?
+
+How does this compare with the plots of data distributions we have been producing?
+
+```{r plotting_distributions}
+# Boxplot for sleep data
+sleep %>% 
+  ggplot(aes(x = group, y = extra)) +
+  geom_boxplot()
+
+# Boxplot for InsectSprays data
+InsectSprays %>% 
+  _____
+```
+
+
+
