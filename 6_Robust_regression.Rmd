@@ -1,0 +1,81 @@
+---
+title: "Exercise 6 - Robust regression"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(MASS)
+library(tidyverse)
+
+source("stats_helpers.R")
+```
+
+# Exercise - Robust regression 
+
+In the previous session, the concept of linear regression was introduced as a way of modelling the 
+response *Y* from a predictor *X* using the equation:
+        $$Y = aX + b$$
+where *a* is the slope of the curve and *b* is the intercept.
+
+The assumptions made in using linear regression  are that the residuals are normal (Gaussian), 
+independent and are of constant variance.
+
+There are occasions where some of these assumptions may not be met. An example is when there may be
+outliers in the data set such as the test data set used in the previous session. In this case, two 
+different types of data were generated; one where non-normal (non-Gaussian) noise was added and 
+another that had some outliers.
+
+On some occasions, it is appropriate to use robust regression to analyse such data.
+In R, this can be done using the `rlm()` command that is available in the `MASS` package.
+
+In this set of exercises, you will have an opportunity to try the `rlm` command.
+
+First, we will remind ourselves of the data we were working with. 
+
+```{r regression_data}
+test_data
+```
+
+Recall from the previous session that, in R, it is possible to form models based on linear 
+regression using the `lm` command. Similarly, models based on robust regression are formed using 
+`rlm`.
+
+So, in the case of the test data where normal noise has been added, we can form models based on 
+linear regression and robust regression as follows:
+
+```{r normal_model}
+normal_noise_lm <- lm(normal_noise ~ x, data = test_data)
+
+# rlm from the MASS package
+normal_noise_rlm <- rlm(normal_noise ~ x, data = test_data)
+
+normal_noise_lm
+normal_noise_rlm
+```
+The last two statements show a short description of the models. What are the differences between the
+linear and robust regressions for the data with normal noise added? How do these compare with the 
+'true' function that generated the data of $y = 2x + 5$?
+
+
+We can plot the regression lines these produce to compare them graphically. In this example, we will
+manually input the slope and intercept values from the above models, but you could also get the same
+results with `geom_smooth()` using `method = "lm"` and `method = "rlm"` if you wanted
+
+```{r}
+ggplot(test_data, aes(x = x, y = normal_noise)) +
+  geom_point() +
+  geom_abline(intercept = 5.043, slope = 1.9, colour = "blue") + # fit with lm
+  geom_abline(intercept = 5.253, slope = 1.877, colour = "red") # fit with rlm
+```
+
+What do you notice about these lines?
+
+#### Trying it out
+
+Now, repeat this exercise for the two other data sets, `non_normal_noise` and `outliers`
+
+```{r other_data}
+
+```
+What are the differences between the linear and robust regressions for each data set? Again, how do 
+these compare with the known true function of $y = 2x +5$?
