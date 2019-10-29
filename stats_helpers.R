@@ -52,4 +52,33 @@ test_data <- tibble(x, perfect_linear) %>%
   ) %>% 
   sample_frac()
 
+# Exercise 5 helper code
+tweet_data <- read_csv("data/tweet_data.csv")
 
+just_margin <- lm(DoF ~ trump_margin, data = tweet_data)
+just_party  <- lm(DoF ~ party, data = tweet_data)
+additive    <- lm(DoF ~ trump_margin + party, data = tweet_data)
+interactive <- lm(DoF ~ trump_margin * party, data = tweet_data)
+
+tweet_models <- tweet_data %>% 
+  mutate(
+    `DoF ~ trump_margin` = predict(just_margin),
+    `DoF ~ party` = predict(just_party),
+    `DoF ~ trump_margin + party` = predict(additive),
+    `DoF ~ trump_margin * party` = predict(interactive)
+    ) %>% 
+  gather(model, prediction, -c(twitter:trump_margin)) %>% 
+  mutate(model = factor(model, levels = c("DoF ~ trump_margin", "DoF ~ party", "DoF ~ trump_margin + party","DoF ~ trump_margin * party"))) %>% 
+  ggplot(aes(x = trump_margin, y = DoF, group = party)) +
+  geom_point(aes(colour = party)) +
+  geom_line(aes(y = prediction), size = 1) +
+  facet_wrap(~model) +
+  theme_linedraw(base_size = 14) +
+  scale_color_brewer(palette="Set1", direction = -1) +
+  labs(
+    title = "Does vote margin affect formality in tweets?",
+    x = "2016 Trump vote margin",
+    y = "Degree of Formality",
+    colour = "Party"
+  ) +
+  theme(legend.position = "bottom")

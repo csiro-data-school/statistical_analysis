@@ -1,0 +1,115 @@
+---
+title: "Exercise 5 - Multi-linear regression"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+
+source("stats_helpers.R")
+```
+
+For this exercise, we will be using data around how 
+[US politicians refer to the President on twitter](https://www.jtimm.net/2019/08/20/referring-to-potus/).
+The purpose of this data was to 
+
+> consider how a House Rep’s stance towards (or opinion of) 45 influences the choice of referring 
+expression, as well as how this stance aligns with the popularity of 45 in a House Rep’s congressional district.
+
+In other words, do politicians whose electorates voted strongly for Donald Trump tend to refer more
+to him using more formal language and vice versa?
+
+### Discussion 
+
+To get started, we will consider a single linear relationship in the data. Visit https://spearce.me/shiny/models/
+to view a simplied version of the data from this study. Under the "Draw here" heading, use your mouse
+to draw your best guess of what the linear relationship between the data is. Once you are happy with
+it, you can right click the combined image under the "Save plot here" heading and copy the image to
+post in Slack for discussion.
+
+Did everyone draw a similar relationship? 
+
+The raw data for this plot has been simplified from the original post, and can be downloaded from
+the site itself or found in the `data` folder.
+
+Check the data below and see if there are any other variables recorded that you think might influence
+the Degree of Formality (`DoF`) for each representative:
+
+```{r check_data}
+tweet_data <- read_csv("data/tweet_data.csv")
+
+tweet_data
+```
+
+### More Discussion
+Additional variables can be added to the plot by selecting the "Add more data variables" checkbox.
+Does this new information change your view of the relationships in the data? Draw your new guess at
+the relationship and post it in Slack for comparison.
+
+
+There are four different ways you might go about modelling this relationship. They are summarised 
+graphically in the `stats_helpers.R` file and can be seen in the `tweet_models` variable. Each model
+facet is labelled with the formula provided to the `lm` function to create it.
+```{r all_models, fig.height=6}
+tweet_models
+```
+
+We will leave discussion of which is the most appropriate model for later, and will instead look at
+how to fit and interpret the additive model (`DoF ~ trump_margin + party`), and leave the interactive
+model ((`DoF ~ trump_margin * party`)) as an exercise.
+
+To fit a linear model using the Trump vote margin, as well as the representative's party, we include
+both terms in the formula we provide to `lm`:
+
+```{r fit_additive}
+additive_model <- lm(DoF ~ trump_margin + party, data = tweet_data)
+
+# Check results
+summary(additive_model)
+```
+
+How do we interpret this result? Remember that the formula for the multivariate model is:
+                $$Y = B_1*X_1 + B_2*X_2 + \dots + B_0 + \epsilon$$
+In our example, $Y$ is life expectancy, $X_1$ is `trump_margin`, and $X_2$ is the `party`.
+
+Running `lm` determines the 'best' values for the $B$ variables, and these values are what is 
+displayed in the summary table. $B_0$ is the (Intercept) coefficient and is the hypothetical value for
+the Degree of Formality for a Representative where all other variables are zero.
+
+$B_1$ is the `trump_margin` coefficient, and tells us how much DoF increases for each unit increase 
+in `trump_margin`. So an increase in the value of `trump_margin` by 1 is associated with an increase
+in the Degree of Formality measure by 0.022.
+
+$B_2$ is a little different because `party` is not a numerical variable like `trump_margin` is. 
+Instead, $B_2$ is equal to zero if the party is Democrat (the
+first alphabetically, and so the 'default' level of the factor), and equal to the `partyRepublican` 
+coefficient when the party of the representative is Republican. So for any given value of `trump_margin`, 
+a Republican is expected to have a Degree of Formality measure 2.96 higher than a Democrat.
+
+Compare the values with the fitted lines in the plot above. Do these values make sense?
+
+Finally, don't forget to check your model to check that your assumptions around the residuals hold.
+
+```{r additive_check}
+resid_panel(additive_model)
+```
+
+
+#### Trying it out
+
+Now, give this a try with the interactive model (`Dof ~ trump_margin * party`)
+```{r fit_interactive}
+interactive_model <- _____
+```
+
+Then, check the results with `summary`, and assess the model residuals.
+```{r diamonds_model}
+# Check model results
+summary(interactive_model)
+
+# Check model assumptions
+resid_panel(interactive_model)
+```
+Can you write out a paragraph explaining the results of this interactive model? Start with the 
+coefficient terms that are the same as in the additive model. Then try to work out what the new 
+coefficient represents. (**Hint:** Compare the slopes of the fitted lines in the demonstration plot).
