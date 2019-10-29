@@ -1,0 +1,57 @@
+---
+title: "Exercise 8 - PCA for data QC"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+For another example of where PCA can be helpful, we will use the `transcriptome.csv` file in the data
+folder. This data contains the gene expression values for 5380 genes across 24 samples of a heat
+stress experiment (8 timepoints and three replicates). To get this data ready, we will need to read
+it in, remove the non-numerical sample names from the data and scale it.
+
+```{r expression_data}
+heat_stress <- read_csv("data/transcriptome.csv") %>% 
+  column_to_rownames("sample") %>% 
+  scale()
+
+# Dataset is 24 * 5380. Show just a small part as an example
+heat_stress[1:5, 1:5]
+```
+
+This dataset has 24 rows (one for each sample), and 5380 columns (one for each gene). This very wide
+dataset is similar in structure to the spectral data shown in the lessons. We would like to perform
+PCA on these samples to identify samples with similar expression profiles. This provides a good first
+check that our experiment has been succesful before we begin a more detailed analysis.
+
+```{r expression_pca}
+# Peform the PCA on the already scaled heat_stress data
+heat_stress_pca <- _____
+
+# Check the summary
+summary(heat_stress_pca)
+```
+
+Now, we would like to plot the samples along the principal components. Since the sample names are of
+the form Replicate_Timepoint, we will first separate those variables out using `separate`. To begin,
+modify the code block below to show a plot along the first two principal components:
+```{r expression_plot}
+heat_stress_pca$x %>% 
+  as_tibble(rownames = "sample") %>% 
+  separate(sample, into = c("replicate","timepoint"), sep = "_") %>% 
+  ggplot(aes(_____)) +
+  geom_point()
+```
+
+Once you have got the basic plot working, try colouring the points by the replicate or the timepoint.
+
+Which of these factors is more associated with the variation in the expression data and what does
+that tell you about the experiment?
+
+Sometimes moving beyond the first two PCs can provide valuable information as well. Plot the samples
+along PC3 and PC4 and colour them by timepoint. Can you guess how long the heat stress lasted?
+
+(If you struggle distinguishing the different colours, you could try using `geom_text` instead and 
+provide the timepoint to the `label` aesthetic.)
