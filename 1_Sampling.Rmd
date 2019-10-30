@@ -24,7 +24,7 @@ substituted for the short name of a distribution. Some distributions you might b
 * The Exponential distribution - `rexp()`
 * The Binomial distribution - `rbinom()`
 
-Each of these functions are called with an argument `n` for the number of samples to take, as well 
+Each of these functions are called with an argument `n` for the number of observations to record, as well 
 as arguments that specify the parameters of the distribution. For example, a normal distribution is
 defined by it's mean and standard deviation, so these can be provided to `rnorm()`
 
@@ -65,7 +65,7 @@ exp_5 <- rexp(n = 5)
 
 ```
 
-> Take 30 samples and repeat this 6 times for your two distributions. Histogram the observations.
+> Take 6 separate samples of 30 observations each for your two distributions. Histogram the observations.
 How does the histogram of the samples look different each time?
 
 ```{r repeated_sampling}
