@@ -97,6 +97,10 @@ long_norm <- gather(repeated_norm, sample_id, sample_value)
 long_norm
 
 ggplot(long_norm, aes(x = sample_value)) + geom_histogram() + facet_wrap(~ sample_id)
+
+# Repeat ggplot version for the exponential distribution
+_____
+
 ```
 
 > Create box and whisker plots for your repeated samples. The central box shows between (roughly) 
