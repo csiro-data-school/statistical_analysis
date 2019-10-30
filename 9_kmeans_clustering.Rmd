@@ -47,5 +47,5 @@ mtcars_pca_plot +
 ### Try it out
 
 Apply k-means clustering to the first two principal components of the gene expression data you used 
-above. Overlay this clustering information on a plot of the samples. How many clusters work best 
+previously. Overlay this clustering information on a plot of the samples. How many clusters work best 
 with the data?
