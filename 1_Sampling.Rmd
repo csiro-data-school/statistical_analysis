@@ -134,7 +134,7 @@ To practice these on more realistic data, we have created several functions that
 data you might encounter in a real situation. These functions all take a single argument `n` that specifies
 the number of samples to take:
 
-* `sample_heights(n)`: Sample `n` values from a human height distribution
+* `sample_height(n)`: Sample `n` values from a human height distribution
 * `sample_income(n)`: Sample `n` values approximating average weekly income from the 2016 Australian Census
 * `sample_nuggety(n)`: Sample `n` values from a "nuggety" distribution, with mostly low value samples,
                        but a few high value "gold nuggets".
