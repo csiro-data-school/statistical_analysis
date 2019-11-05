@@ -70,7 +70,7 @@ summary(additive_model)
 
 How do we interpret this result? Remember that the formula for the multivariate model is:
                 $$Y = B_1*X_1 + B_2*X_2 + \dots + B_0 + \epsilon$$
-In our example, $Y$ is life expectancy, $X_1$ is `trump_margin`, and $X_2$ is the `party`.
+In our example, $Y$ is `DoF`, $X_1$ is `trump_margin`, and $X_2$ is the `party`.
 
 Running `lm` determines the 'best' values for the $B$ variables, and these values are what is 
 displayed in the summary table. $B_0$ is the (Intercept) coefficient and is the hypothetical value for

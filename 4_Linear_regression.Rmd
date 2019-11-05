@@ -95,7 +95,7 @@ library(ggResidpanel)
 resid_panel(perfect_model)
 ```
 **Note:** for the perfect linear model, these summary plots are not that useful because there aren't
-any true residuals from a perfect relationship. These plots will be mush more informative when you 
+any true residuals from a perfect relationship. These plots will be much more informative when you 
 start to use them with more realistic data.
 
 ```{r perfect_linear_example}
