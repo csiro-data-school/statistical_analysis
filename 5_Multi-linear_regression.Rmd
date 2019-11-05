@@ -5,6 +5,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 library(tidyverse)
+library(ggResidpanel)
 
 source("stats_helpers.R")
 ```
