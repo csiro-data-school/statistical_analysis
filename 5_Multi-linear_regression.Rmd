@@ -98,7 +98,7 @@ resid_panel(additive_model)
 
 #### Trying it out
 
-Now, give this a try with the interactive model (`Dof ~ trump_margin * party`)
+Now, give this a try with the interactive model (`DoF ~ trump_margin * party`)
 ```{r fit_interactive}
 interactive_model <- _____
 ```
